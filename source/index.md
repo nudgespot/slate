@@ -103,3 +103,45 @@ properties|Hash|Optional|Name value pair of properties of the activity. Example:
 ```javascript
 //Send an activity
 nudgespot.track("signup", {plan: "bronze", currency: "USD", value: 100.23});
+```
+
+
+# Nudgespot vs SendGrid (or SES)
+SendGrid and SES are transactional email providers. But Nudgespot is a service that makes it easy to send and schedule emails based on events/actions performed by a customer. In fact, Nudgespot uses a provider like SendGrid to send emails.
+
+I know we keep saying that it is easier to send mails via Nudgespot, than via SES/SendGrid. Time to back it up with facts. So here is the faceoff:
+
+## Round 1 - Send an email on signup
+A simple transactional email that you send to your customers, based on a transaction - in this case, a sign up event.
+
+With Nudgespot, it is as easy as:
+|nudgespot.track("signup", {email: "foobar@example.com", first_name: "Foo", plan: "Bronze"})|
+
+Now on our dashboard, you can configure a trigger that sends an email on "signup" event. You can edit the mailer code using our rich composer, and can test out different subject lines, message body any time, without any code changes. Easy right?
+
+Now compare this with SendGrid/SES. You'll need to code your html message. You also need to separately manage background jobs (or cron jobs) that queues these emails with these ESPs.
+
+*Verdict*: We think it is a 1-0 in favour of Nudgespot. Right?
+
+## Round 2 - A follow up email 3 days after signup
+
+Want to test if it is better to send these welcome emails a week after someone signs up? With SendGrid/SES, you need a background job scheduled to queue these emails at the right time. Unnecessary overhead we say.
+
+With Nudgespot, you can schedule your emails to be delivered any time after the event was processed - either a few hours or a couple of days after the event has been processed.
+
+*Verdict*: Very easy with Nudgespot, right?
+
+## Round 3 - Email with an offer of a demo
+Let's say you want to send an email with an offer for a demo, only to customers that haven't done a particular activity. This is where it starts getting really easy with Nudgespot.
+
+You can configure triggers with really complex rules. No messy database queries, no cron dependencies. To give you an idea of the power of Nudgespot, here are some triggers you can create with Nudgespot:
+
+Customers that:
+* did signup but did not create_campaign
+* did add_to_cart but did not place_order within 3 days of add_to_cart
+* did order a product in category "silk"
+
+*Verdict*: You are looking for our signup page right? [Here](https://beta.nudgespot.com) you go!
+
+## Conclusion
+I hope you are seeing the benefits of Nudgespot. While you are used to sending emails directly from code, we hope you now see the benefits of using Nudgespot.
