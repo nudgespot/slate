@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-    <title>API Reference</title>
+    <title>Nudgespot API Reference</title>
 
     <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
@@ -12,7 +12,7 @@
 
       <script>
         $(function() {
-          setupLanguages(["shell","ruby","python"]);
+          setupLanguages(["shell","javascript"]);
         });
       </script>
   </head>
@@ -27,8 +27,7 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+            <li><a href='http//www.nudgespot.com'>Sign Up for Nudgespot</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
@@ -36,226 +35,155 @@
       <div class="content">
         <h1 id="introduction">Introduction</h1>
 
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>Thank you for your interest in Nudgespot&rsquo;s APIs! Nudgespot is the easiest way to send emails from your code. Easier than using Amazon SES/SendGrid. You can read more about our service <a href="http://www.nudgespot.com">here</a>.</p>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<h3 id="feedback">Feedback</h3>
 
-<p>This example API documentation page was created with <a href="http://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&rsquo;s documentation.</p>
+<p>If you have feedback on our APIs or would like to suggest feature requests for the APIs, contact <a href="mailto:devs@nudgespot.com">devs@nudgespot.com</a>.</p>
 
-<h1 id="authentication">Authentication</h1>
+<h1 id="overview">Overview</h1>
 
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p>Nudgespot makes it easy to trigger emails from your code. Instead of writing mailer code, you only send events to Nudgespot, and then configure emails as triggers from our dashboard. This gives you the flexibility to change the email subject or body or template any time, without changing any code. Sending events to Nudgespot is easy, and works just like Google Analytics/Mixpanel.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</pre>
-<pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
+<p>To send events to Nudgespot, use our Tracking API below.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</pre>
-<pre class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</pre>
+<h1 id="technical-overview">Technical Overview</h1>
 
-<blockquote>
-<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
-</blockquote>
+<h2 id="rest">REST</h2>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>Our REST APIs are available at the following endpoint:</p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p><em>Base API Endpoint:</em> https://api:&lt;your_api_secret_key&gt;@beta.nudgespot.com/</p>
 
-<p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
+<h2 id="authentication">Authentication</h2>
 
-<p><aside class="notice">
-You must replace <code class="prettyprint">meowmeowmeow</code> with your personal API key.
-</aside></p>
+<p>Nudgespot validates all your requests using authentication tokens. You can find your authentication tokens on your Nudgespot <a href="https://beta.nudgespot.com/settings">settings page</a>.</p>
 
-<h1 id="kittens">Kittens</h1>
+<h3 id="rest">REST</h3>
 
-<h2 id="get-all-kittens">Get All Kittens</h2>
-<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</pre>
-<pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</pre>
-<pre class="highlight shell">curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<p>Our REST API expects that you pass your <em>API Secret Key</em> along with your requests. The format is:
+https://api:&lt;api_secret_key&gt;@beta.nudgespot.com</p>
+<pre class="highlight shell"><span class="c"># Authenticating via curl</span>
+curl <span class="s2">"https://api:your_api_secret_key/api_endpoint_here"</span>
 </pre>
 
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json"><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></pre>
+<h1 id="tracking-api">Tracking API</h1>
 
-<p>This endpoint retrieves all kittens.</p>
+<p>Nudgespot can accept events via a REST service or through javascript embedded on your website.</p>
 
-<h3 id="http-request">HTTP Request</h3>
+<h2 id="tracking-activities-via-rest">Tracking activities via REST</h2>
 
-<p><code class="prettyprint">GET http://example.com/kittens</code></p>
+<p>To create a new activity via our REST API:</p>
 
-<h3 id="query-parameters">Query Parameters</h3>
+<p><em>POST</em> request should be made to the following url:</p>
+
+<p>https://api:<api_secret_key>@beta.nudgespot.com/activities</p>
+
+<p>The payload must be a <em>JSON</em> in the format below:</p>
 
 <table><thead>
 <tr>
 <th>Parameter</th>
-<th>Default</th>
+<th>Type</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>event</td>
+<td>String</td>
+<td>Name of the activity. Use lowercase and underscore notation. <em>Examples:</em> &ldquo;signup&rdquo;, &ldquo;launch_campaign&rdquo;</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>user</td>
+<td>Hash</td>
+<td>Email of the customer that performed this activity. Example: {&ldquo;email&rdquo;: &ldquo;foobar@example.com&rdquo;}</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>String</td>
+<td>Date/time of the activity in ISO 8601 format</td>
+</tr>
+<tr>
+<td>properties</td>
+<td>Hash</td>
+<td>Name value pairs of any additional properties of the activity {&ldquo;name1&rdquo;: value1, &ldquo;name2&rdquo;: &ldquo;value2&rdquo;},</td>
 </tr>
 </tbody></table>
-
-<p><aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside></p>
-
-<h2 id="get-a-specific-kitten">Get a Specific Kitten</h2>
-<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre>
-<pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre>
-<pre class="highlight shell">curl <span class="s2">"http://example.com/api/kittens/3"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<pre class="highlight shell"><span class="c"># Sending an activity</span>
+curl -X POST <span class="s2">"https://api:your_api_secret_key/activities"</span> --header <span class="s2">"Content-Type:application/json"</span> -d <span class="s2">"{'user' =&gt; { 'email' =&gt; 'foobar@example.com' },'timestamp' =&gt; '2014-01-27T09:15:00.000Z','properties' =&gt; {'plan': 'bronze'},'event' =&gt; 'Signup'}"</span>
 </pre>
 
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></pre>
+<h2 id="tracking-activities-via-javascript">Tracking activities via Javascript</h2>
 
-<p>This endpoint retrieves a specific kitten.</p>
+<p>Nudgespot&rsquo;s javascript exposes one global object: <em>nudgespot</em> with methods that allow you to identify a customer and track activities of that customer.</p>
 
-<p><aside class="warning">If you&rsquo;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside></p>
+<h3 id="identify">Identify</h3>
 
-<h3 id="http-request">HTTP Request</h3>
+<p>Use <strong>nudgespot.identify()</strong> to identify a customer.</p>
 
-<p><code class="prettyprint">GET http://example.com/kittens/&lt;ID&gt;</code></p>
-
-<h3 id="url-parameters">URL Parameters</h3>
+<p><em>Parameters:</em></p>
 
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the cat to retrieve</td>
+<td>email</td>
+<td>String</td>
+<td>Yes</td>
+<td>Uniquely identifies a customer</td>
+</tr>
+<tr>
+<td>properties</td>
+<td>Hash</td>
+<td>Optional</td>
+<td>Name value pair of properties of the customer. Example: {first_name: &ldquo;Joe&rdquo;, last_name: &ldquo;Dash&rdquo;, city: &ldquo;Bangalore&rdquo;, phone: &ldquo;+91 90000 00001&rdquo;, created: &ldquo;2014-01-27T09:15:00.000Z&rdquo;}</td>
 </tr>
 </tbody></table>
+<pre class="highlight javascript"><span class="c1">//Send an activity
+</span><span class="nx">nudgespot</span><span class="p">.</span><span class="nx">identify</span><span class="p">(</span><span class="s2">"foobar@example.com"</span><span class="p">,</span> <span class="p">{</span><span class="na">first_name</span><span class="p">:</span> <span class="s2">"Joe"</span><span class="p">,</span> <span class="na">last_name</span><span class="p">:</span> <span class="s2">"Dash"</span><span class="p">,</span> <span class="na">created</span><span class="p">:</span> <span class="s1">'2014-01-27T09:15:00.000Z'</span><span class="p">,</span> <span class="na">city</span><span class="p">:</span> <span class="s2">"Bangalore"</span><span class="p">,</span> <span class="na">phone</span><span class="p">:</span> <span class="s2">"+91 90000 00001"</span><span class="p">});</span>
+</pre>
 
-          <h1 id="errors">Errors</h1>
+<h3 id="send-event">Send event</h3>
 
-<p><aside class="notice">This error section is stored in a separate file in <code class="prettyprint">includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the <code class="prettyprint">includes</code> folder and add them to the top of your <code class="prettyprint">index.md</code>&rsquo;s frontmatter. Files are included in the order listed.</aside></p>
+<p>Use <strong>nudgespot.track()</strong> to send an activity.</p>
 
-<p>The Kittn API uses the following error codes:</p>
+<p><em>Parameters:</em></p>
 
 <table><thead>
 <tr>
-<th>Error Code</th>
-<th>Meaning</th>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>400</td>
-<td>Bad Request &ndash; Your request sucks</td>
+<td>name</td>
+<td>String</td>
+<td>Yes</td>
+<td>Name of the event. Use lowercase and underscore notations. Examples: &ldquo;signup&rdquo;, &ldquo;view_catalog&rdquo;</td>
 </tr>
 <tr>
-<td>401</td>
-<td>Unauthorized &ndash; Your API key is wrong</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
-</tr>
-<tr>
-<td>404</td>
-<td>Not Found &ndash; The specified kitten could not be found</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone &ndash; The kitten requested has been removed from our servers</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&rsquo;m a teapot</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slown down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Please try again later.</td>
+<td>properties</td>
+<td>Hash</td>
+<td>Optional</td>
+<td>Name value pair of properties of the activity. Example: {plan: &ldquo;bronze&rdquo;, currency: &ldquo;USD&rdquo;, value: 100.23}</td>
 </tr>
 </tbody></table>
+<pre class="highlight javascript"><span class="c1">//Send an activity
+</span><span class="nx">nudgespot</span><span class="p">.</span><span class="nx">track</span><span class="p">(</span><span class="s2">"signup"</span><span class="p">,</span> <span class="p">{</span><span class="na">plan</span><span class="p">:</span> <span class="s2">"bronze"</span><span class="p">,</span> <span class="na">currency</span><span class="p">:</span> <span class="s2">"USD"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="mf">100.23</span><span class="p">});</span>
+</pre>
 
       </div>
       <div class="dark-box">
           <div id="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
     </div>
