@@ -138,6 +138,7 @@ Let's say you want to send an email with an offer for a demo, only to customers 
 You can configure triggers with really complex rules. No messy database queries, no cron dependencies. To give you an idea of the power of Nudgespot, here are some triggers you can create with Nudgespot:
 
 Customers that:
+
 * did signup but did not create_campaign
 * did add_to_cart but did not place_order within 3 days of add_to_cart
 * did order a product in category "silk"
