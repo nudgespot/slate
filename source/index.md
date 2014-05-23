@@ -1,168 +1,105 @@
 ---
-title: API Reference
+title: Nudgespot API Reference
 
 language_tabs:
   - shell
-  - ruby
-  - python
+  - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a href='http//www.nudgespot.com'>Sign Up for Nudgespot</a>
 
 includes:
-  - errors
 
 search: true
 ---
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Thank you for your interest in Nudgespot's APIs! Nudgespot is the easiest way to send emails from your code. Easier than using Amazon SES/SendGrid. You can read more about our service [here](http://www.nudgespot.com).
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+### Feedback
 
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+If you have feedback on our APIs or would like to suggest feature requests for the APIs, contact [devs@nudgespot.com](mailto:devs@nudgespot.com).
 
-# Authentication
+# Overview
+Nudgespot makes it easy to trigger emails from your code. Instead of writing mailer code, you only send events to Nudgespot, and then configure emails as triggers from our dashboard. This gives you the flexibility to change the email subject or body or template any time, without changing any code. Sending events to Nudgespot is easy, and works just like Google Analytics/Mixpanel.
 
-> To authorize, use this code:
+To send events to Nudgespot, use our Tracking API below.
 
-```ruby
-require 'kittn'
+# Technical Overview
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+## REST
+Our REST APIs are available at the following endpoint:
 
-```python
-import 'kittn'
+*Base API Endpoint:* https://api:&lt;your_api_secret_key&gt;@beta.nudgespot.com/
 
-api = Kittn.authorize('meowmeowmeow')
-```
+## Authentication
+Nudgespot validates all your requests using authentication tokens. You can find your authentication tokens on your Nudgespot [settings page](https://beta.nudgespot.com/settings).
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace `meowmeowmeow` with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import 'kittn'
-
-api = Kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+### REST
+Our REST API expects that you pass your *API Secret Key* along with your requests. The format is:
+https://api:&lt;api_secret_key&gt;@beta.nudgespot.com
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+# Authenticating via curl
+curl "https://api:your_api_secret_key/api_endpoint_here"
 ```
 
-> The above command returns JSON structured like this:
+# Tracking API
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
+Nudgespot can accept events via a REST service or through javascript embedded on your website.
 
-This endpoint retrieves all kittens.
+## Tracking activities via REST
+To create a new activity via our REST API:
 
-### HTTP Request
+*POST* request should be made to the following url:
 
-`GET http://example.com/kittens`
+https://api:<api_secret_key>@beta.nudgespot.com/activities
 
-### Query Parameters
+The payload must be a *JSON* in the format below:
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+Parameter | Type | Description
+--------- | ---- | -----------
+event|String|Name of the activity. Use lowercase and underscore notation. *Examples:* "signup", "launch_campaign"
+user|Hash|Email of the customer that performed this activity. Example: {"email": "foobar@example.com"}
+timestamp|String| Date/time of the activity in ISO 8601 format
+properties|Hash| Name value pairs of any additional properties of the activity {"name1": value1, "name2": "value2"},
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import 'kittn'
-
-api = Kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
 
 ```shell
-curl "http://example.com/api/kittens/3"
-  -H "Authorization: meowmeowmeow"
+# Sending an activity
+curl -X POST "https://api:your_api_secret_key/activities" --header "Content-Type:application/json" -d "{'user' => { 'email' => 'foobar@example.com' },'timestamp' => '2014-01-27T09:15:00.000Z','properties' => {'plan': 'bronze'},'event' => 'Signup'}"
 ```
 
-> The above command returns JSON structured like this:
+## Tracking activities via Javascript
 
-```json
-{
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
+Nudgespot's javascript exposes one global object: *nudgespot* with methods that allow you to identify a customer and track activities of that customer.
+
+### Identify
+Use **nudgespot.identify()** to identify a customer.
+
+*Parameters:*
+
+|Parameter|Type|Required|Description|
+----------|---|--------|-----------|
+email|String|Yes|Uniquely identifies a customer|
+properties|Hash|Optional|Name value pair of properties of the customer. Example: {first_name: "Joe", last_name: "Dash", city: "Bangalore", phone: "+91 90000 00001", created: "2014-01-27T09:15:00.000Z"}
+
+```javascript
+//Send an activity
+nudgespot.identify("foobar@example.com", {first_name: "Joe", last_name: "Dash", created: '2014-01-27T09:15:00.000Z', city: "Bangalore", phone: "+91 90000 00001"});
 ```
 
-This endpoint retrieves a specific kitten.
+### Send event
+Use **nudgespot.track()** to send an activity.
 
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
+*Parameters:*
 
-### HTTP Request
+|Parameter|Type|Required|Description|
+----------|---|--------|-----------|
+name|String|Yes|Name of the event. Use lowercase and underscore notations. Examples: "signup", "view_catalog" |
+properties|Hash|Optional|Name value pair of properties of the activity. Example: {plan: "bronze", currency: "USD", value: 100.23}
 
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the cat to retrieve
-
+```javascript
+//Send an activity
+nudgespot.track("signup", {plan: "bronze", currency: "USD", value: 100.23});
