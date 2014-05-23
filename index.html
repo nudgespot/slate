@@ -1,3 +1,4 @@
+d
 <!doctype html>
 <html>
   <head>
@@ -178,6 +179,50 @@ curl -X POST <span class="s2">"https://api:your_api_secret_key/activities"</span
 <pre class="highlight javascript"><span class="c1">//Send an activity
 </span><span class="nx">nudgespot</span><span class="p">.</span><span class="nx">track</span><span class="p">(</span><span class="s2">"signup"</span><span class="p">,</span> <span class="p">{</span><span class="na">plan</span><span class="p">:</span> <span class="s2">"bronze"</span><span class="p">,</span> <span class="na">currency</span><span class="p">:</span> <span class="s2">"USD"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="mf">100.23</span><span class="p">});</span>
 </pre>
+
+<h1 id="nudgespot-vs-sendgrid-(or-ses)">Nudgespot vs SendGrid (or SES)</h1>
+
+<p>SendGrid and SES are transactional email providers. But Nudgespot is a service that makes it easy to send and schedule emails based on events/actions performed by a customer. In fact, Nudgespot uses a provider like SendGrid to send emails.</p>
+
+<p>I know we keep saying that it is easier to send mails via Nudgespot, than via SES/SendGrid. Time to back it up with facts. So here is the faceoff:</p>
+
+<h2 id="round-1---send-an-email-on-signup">Round 1 - Send an email on signup</h2>
+
+<p>A simple transactional email that you send to your customers, based on a transaction - in this case, a sign up event.</p>
+
+<p>With Nudgespot, it is as easy as:
+|nudgespot.track(&ldquo;signup&rdquo;, {email: &ldquo;foobar@example.com&rdquo;, first_name: &ldquo;Foo&rdquo;, plan: &ldquo;Bronze&rdquo;})|</p>
+
+<p>Now on our dashboard, you can configure a trigger that sends an email on &ldquo;signup&rdquo; event. You can edit the mailer code using our rich composer, and can test out different subject lines, message body any time, without any code changes. Easy right?</p>
+
+<p>Now compare this with SendGrid/SES. You&rsquo;ll need to code your html message. You also need to separately manage background jobs (or cron jobs) that queues these emails with these ESPs.</p>
+
+<p><em>Verdict</em>: We think it is a 1-0 in favour of Nudgespot. Right?</p>
+
+<h2 id="round-2---a-follow-up-email-3-days-after-signup">Round 2 - A follow up email 3 days after signup</h2>
+
+<p>Want to test if it is better to send these welcome emails a week after someone signs up? With SendGrid/SES, you need a background job scheduled to queue these emails at the right time. Unnecessary overhead we say.</p>
+
+<p>With Nudgespot, you can schedule your emails to be delivered any time after the event was processed - either a few hours or a couple of days after the event has been processed.</p>
+
+<p><em>Verdict</em>: Very easy with Nudgespot, right?</p>
+
+<h2 id="round-3---email-with-an-offer-of-a-demo">Round 3 - Email with an offer of a demo</h2>
+
+<p>Let&rsquo;s say you want to send an email with an offer for a demo, only to customers that haven&rsquo;t done a particular activity. This is where it starts getting really easy with Nudgespot.</p>
+
+<p>You can configure triggers with really complex rules. No messy database queries, no cron dependencies. To give you an idea of the power of Nudgespot, here are some triggers you can create with Nudgespot:</p>
+
+<p>Customers that:
+* did signup but did not create_campaign
+* did add_to_cart but did not place_order within 3 days of add_to_cart
+* did order a product in category &ldquo;silk&rdquo;</p>
+
+<p><em>Verdict</em>: You are looking for our signup page right? <a href="https://beta.nudgespot.com">Here</a> you go!</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I hope you are seeing the benefits of Nudgespot. While you are used to sending emails directly from code, we hope you now see the benefits of using Nudgespot.</p>
 
       </div>
       <div class="dark-box">
