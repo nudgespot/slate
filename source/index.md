@@ -6,7 +6,7 @@ language_tabs:
   - javascript
 
 toc_footers:
-  - <a href='http//www.nudgespot.com'>Sign Up for Nudgespot</a>
+  - <a href='https//beta.nudgespot.com'>Sign Up for Nudgespot</a>
 
 includes:
 
