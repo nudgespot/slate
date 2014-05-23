@@ -115,7 +115,8 @@ I know we keep saying that it is easier to send mails via Nudgespot, than via SE
 A simple transactional email that you send to your customers, based on a transaction - in this case, a sign up event.
 
 With Nudgespot, it is as easy as:
-|nudgespot.track("signup", {email: "foobar@example.com", first_name: "Foo", plan: "Bronze"})|
+
+<code>nudgespot.track("signup", {email: "foobar@example.com", first_name: "Foo", plan: "Bronze"})</code>
 
 Now on our dashboard, you can configure a trigger that sends an email on "signup" event. You can edit the mailer code using our rich composer, and can test out different subject lines, message body any time, without any code changes. Easy right?
 
