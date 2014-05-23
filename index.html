@@ -190,8 +190,9 @@ curl -X POST <span class="s2">"https://api:your_api_secret_key/activities"</span
 
 <p>A simple transactional email that you send to your customers, based on a transaction - in this case, a sign up event.</p>
 
-<p>With Nudgespot, it is as easy as:
-|nudgespot.track(&ldquo;signup&rdquo;, {email: &ldquo;foobar@example.com&rdquo;, first_name: &ldquo;Foo&rdquo;, plan: &ldquo;Bronze&rdquo;})|</p>
+<p>With Nudgespot, it is as easy as:</p>
+
+<p><code>nudgespot.track(&quot;signup&quot;, {email: &quot;foobar@example.com&quot;, first_name: &quot;Foo&quot;, plan: &quot;Bronze&quot;})</code></p>
 
 <p>Now on our dashboard, you can configure a trigger that sends an email on &ldquo;signup&rdquo; event. You can edit the mailer code using our rich composer, and can test out different subject lines, message body any time, without any code changes. Easy right?</p>
 
@@ -213,10 +214,13 @@ curl -X POST <span class="s2">"https://api:your_api_secret_key/activities"</span
 
 <p>You can configure triggers with really complex rules. No messy database queries, no cron dependencies. To give you an idea of the power of Nudgespot, here are some triggers you can create with Nudgespot:</p>
 
-<p>Customers that:
-* did signup but did not create_campaign
-* did add_to_cart but did not place_order within 3 days of add_to_cart
-* did order a product in category &ldquo;silk&rdquo;</p>
+<p>Customers that:</p>
+
+<ul>
+<li>did signup but did not create_campaign</li>
+<li>did add_to_cart but did not place_order within 3 days of add_to_cart</li>
+<li>did order a product in category &ldquo;silk&rdquo;</li>
+</ul>
 
 <p><em>Verdict</em>: You are looking for our signup page right? <a href="https://beta.nudgespot.com">Here</a> you go!</p>
 
@@ -233,4 +237,14 @@ curl -X POST <span class="s2">"https://api:your_api_secret_key/activities"</span
       </div>
     </div>
   </body>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48102459-1', 'nudgespot.com');
+  ga('send', 'pageview');
+
+  </script>
 </html>
