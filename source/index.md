@@ -31,14 +31,14 @@ To send events to Nudgespot, use our Tracking API below.
 ## REST
 Our REST APIs are available at the following endpoint:
 
-*Base API Endpoint:* https://api:&lt;your_api_secret_key&gt;@beta.nudgespot.com/
+*Base API Endpoint:* https://api:&lt;your_api_secret_key&gt;@api.nudgespot.com/
 
 ## Authentication
-Nudgespot validates all your requests using authentication tokens. You can find your authentication tokens on your Nudgespot [settings page](https://beta.nudgespot.com/settings).
+Nudgespot validates all your requests using authentication tokens. You can find your authentication tokens on your Nudgespot [settings page](https://app.nudgespot.com/settings).
 
 ### REST
 Our REST API expects that you pass your *API Secret Key* along with your requests. The format is:
-https://api:&lt;api_secret_key&gt;@beta.nudgespot.com
+https://api:&lt;api_secret_key&gt;@api.nudgespot.com
 
 ```shell
 # Authenticating via curl
@@ -54,7 +54,7 @@ To create a new activity via our REST API:
 
 *POST* request should be made to the following url:
 
-https://api:<api_secret_key>@beta.nudgespot.com/activities
+https://api:<api_secret_key>@api.nudgespot.com/activities
 
 The payload must be a *JSON* in the format below:
 
@@ -143,7 +143,7 @@ Customers that:
 * did add_to_cart but did not place_order within 3 days of add_to_cart
 * did order a product in category "silk"
 
-*Verdict*: You are looking for our signup page right? [Here](https://beta.nudgespot.com) you go!
+*Verdict*: You are looking for our signup page right? [Here](https://app.nudgespot.com) you go!
 
 ## Conclusion
 I hope you are seeing the benefits of Nudgespot. While you are used to sending emails directly from code, we hope you now see the benefits of using Nudgespot.
