@@ -1,0 +1,250 @@
+d
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <title>Nudgespot API Reference</title>
+
+    <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="javascripts/all.js" type="text/javascript"></script>
+
+      <script>
+        $(function() {
+          setupLanguages(["shell","javascript"]);
+        });
+      </script>
+  </head>
+
+  <body class="index">
+    <div class="tocify-wrapper">
+      <a href="http://www.nudgespot.com"><img src="images/logo.png" /></a>
+        <div class="search">
+          <input type="text" class="search" id="input-search">
+        </div>
+        <div class="search-info"></div>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='http://www.nudgespot.com'>Sign Up for Nudgespot</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id="introduction">Introduction</h1>
+
+<p>Thank you for your interest in Nudgespot&rsquo;s APIs! Nudgespot is the easiest way to send emails from your code. Easier than using Amazon SES/SendGrid. You can read more about our service <a href="http://www.nudgespot.com">here</a>.</p>
+
+<h3 id="feedback">Feedback</h3>
+
+<p>If you have feedback on our APIs or would like to suggest feature requests for the APIs, contact <a href="mailto:devs@nudgespot.com">devs@nudgespot.com</a>.</p>
+
+<h1 id="overview">Overview</h1>
+
+<p>Nudgespot makes it easy to trigger emails from your code. Instead of writing mailer code, you only send events to Nudgespot, and then configure emails as triggers from our dashboard. This gives you the flexibility to change the email subject or body or template any time, without changing any code. Sending events to Nudgespot is easy, and works just like Google Analytics/Mixpanel.</p>
+
+<p>To send events to Nudgespot, use our Tracking API below.</p>
+
+<h1 id="technical-overview">Technical Overview</h1>
+
+<h2 id="rest">REST</h2>
+
+<p>Our REST APIs are available at the following endpoint:</p>
+
+<p><em>Base API Endpoint:</em> https://api:&lt;your_api_secret_key&gt;@beta.nudgespot.com/</p>
+
+<h2 id="authentication">Authentication</h2>
+
+<p>Nudgespot validates all your requests using authentication tokens. You can find your authentication tokens on your Nudgespot <a href="https://beta.nudgespot.com/settings">settings page</a>.</p>
+
+<h3 id="rest">REST</h3>
+
+<p>Our REST API expects that you pass your <em>API Secret Key</em> along with your requests. The format is:
+https://api:&lt;api_secret_key&gt;@beta.nudgespot.com</p>
+<pre class="highlight shell"><span class="c"># Authenticating via curl</span>
+curl <span class="s2">"https://api:your_api_secret_key/api_endpoint_here"</span>
+</pre>
+
+<h1 id="tracking-api">Tracking API</h1>
+
+<p>Nudgespot can accept events via a REST service or through javascript embedded on your website.</p>
+
+<h2 id="tracking-activities-via-rest">Tracking activities via REST</h2>
+
+<p>To create a new activity via our REST API:</p>
+
+<p><em>POST</em> request should be made to the following url:</p>
+
+<p>https://api:<api_secret_key>@beta.nudgespot.com/activities</p>
+
+<p>The payload must be a <em>JSON</em> in the format below:</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>event</td>
+<td>String</td>
+<td>Name of the activity. Use lowercase and underscore notation. <em>Examples:</em> &ldquo;signup&rdquo;, &ldquo;launch_campaign&rdquo;</td>
+</tr>
+<tr>
+<td>user</td>
+<td>Hash</td>
+<td>Email of the customer that performed this activity. Example: {&ldquo;email&rdquo;: &ldquo;foobar@example.com&rdquo;}</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>String</td>
+<td>Date/time of the activity in ISO 8601 format</td>
+</tr>
+<tr>
+<td>properties</td>
+<td>Hash</td>
+<td>Name value pairs of any additional properties of the activity {&ldquo;name1&rdquo;: value1, &ldquo;name2&rdquo;: &ldquo;value2&rdquo;},</td>
+</tr>
+</tbody></table>
+<pre class="highlight shell"><span class="c"># Sending an activity</span>
+curl -X POST <span class="s2">"https://api:your_api_secret_key/activities"</span> --header <span class="s2">"Content-Type:application/json"</span> -d <span class="s2">"{'user' =&gt; { 'email' =&gt; 'foobar@example.com' },'timestamp' =&gt; '2014-01-27T09:15:00.000Z','properties' =&gt; {'plan': 'bronze'},'event' =&gt; 'Signup'}"</span>
+</pre>
+
+<h2 id="tracking-activities-via-javascript">Tracking activities via Javascript</h2>
+
+<p>Nudgespot&rsquo;s javascript exposes one global object: <em>nudgespot</em> with methods that allow you to identify a customer and track activities of that customer.</p>
+
+<h3 id="identify">Identify</h3>
+
+<p>Use <strong>nudgespot.identify()</strong> to identify a customer.</p>
+
+<p><em>Parameters:</em></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>email</td>
+<td>String</td>
+<td>Yes</td>
+<td>Uniquely identifies a customer</td>
+</tr>
+<tr>
+<td>properties</td>
+<td>Hash</td>
+<td>Optional</td>
+<td>Name value pair of properties of the customer. Example: {first_name: &ldquo;Joe&rdquo;, last_name: &ldquo;Dash&rdquo;, city: &ldquo;Bangalore&rdquo;, phone: &ldquo;+91 90000 00001&rdquo;, created: &ldquo;2014-01-27T09:15:00.000Z&rdquo;}</td>
+</tr>
+</tbody></table>
+<pre class="highlight javascript"><span class="c1">//Send an activity
+</span><span class="nx">nudgespot</span><span class="p">.</span><span class="nx">identify</span><span class="p">(</span><span class="s2">"foobar@example.com"</span><span class="p">,</span> <span class="p">{</span><span class="na">first_name</span><span class="p">:</span> <span class="s2">"Joe"</span><span class="p">,</span> <span class="na">last_name</span><span class="p">:</span> <span class="s2">"Dash"</span><span class="p">,</span> <span class="na">created</span><span class="p">:</span> <span class="s1">'2014-01-27T09:15:00.000Z'</span><span class="p">,</span> <span class="na">city</span><span class="p">:</span> <span class="s2">"Bangalore"</span><span class="p">,</span> <span class="na">phone</span><span class="p">:</span> <span class="s2">"+91 90000 00001"</span><span class="p">});</span>
+</pre>
+
+<h3 id="send-event">Send event</h3>
+
+<p>Use <strong>nudgespot.track()</strong> to send an activity.</p>
+
+<p><em>Parameters:</em></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>String</td>
+<td>Yes</td>
+<td>Name of the event. Use lowercase and underscore notations. Examples: &ldquo;signup&rdquo;, &ldquo;view_catalog&rdquo;</td>
+</tr>
+<tr>
+<td>properties</td>
+<td>Hash</td>
+<td>Optional</td>
+<td>Name value pair of properties of the activity. Example: {plan: &ldquo;bronze&rdquo;, currency: &ldquo;USD&rdquo;, value: 100.23}</td>
+</tr>
+</tbody></table>
+<pre class="highlight javascript"><span class="c1">//Send an activity
+</span><span class="nx">nudgespot</span><span class="p">.</span><span class="nx">track</span><span class="p">(</span><span class="s2">"signup"</span><span class="p">,</span> <span class="p">{</span><span class="na">plan</span><span class="p">:</span> <span class="s2">"bronze"</span><span class="p">,</span> <span class="na">currency</span><span class="p">:</span> <span class="s2">"USD"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="mf">100.23</span><span class="p">});</span>
+</pre>
+
+<h1 id="nudgespot-vs-sendgrid-(or-ses)">Nudgespot vs SendGrid (or SES)</h1>
+
+<p>SendGrid and SES are transactional email providers. But Nudgespot is a service that makes it easy to send and schedule emails based on events/actions performed by a customer. In fact, Nudgespot uses a provider like SendGrid to send emails.</p>
+
+<p>I know we keep saying that it is easier to send mails via Nudgespot, than via SES/SendGrid. Time to back it up with facts. So here is the faceoff:</p>
+
+<h2 id="round-1---send-an-email-on-signup">Round 1 - Send an email on signup</h2>
+
+<p>A simple transactional email that you send to your customers, based on a transaction - in this case, a sign up event.</p>
+
+<p>With Nudgespot, it is as easy as:</p>
+
+<p><code>nudgespot.track(&quot;signup&quot;, {email: &quot;foobar@example.com&quot;, first_name: &quot;Foo&quot;, plan: &quot;Bronze&quot;})</code></p>
+
+<p>Now on our dashboard, you can configure a trigger that sends an email on &ldquo;signup&rdquo; event. You can edit the mailer code using our rich composer, and can test out different subject lines, message body any time, without any code changes. Easy right?</p>
+
+<p>Now compare this with SendGrid/SES. You&rsquo;ll need to code your html message. You also need to separately manage background jobs (or cron jobs) that queues these emails with these ESPs.</p>
+
+<p><em>Verdict</em>: We think it is a 1-0 in favour of Nudgespot. Right?</p>
+
+<h2 id="round-2---a-follow-up-email-3-days-after-signup">Round 2 - A follow up email 3 days after signup</h2>
+
+<p>Want to test if it is better to send these welcome emails a week after someone signs up? With SendGrid/SES, you need a background job scheduled to queue these emails at the right time. Unnecessary overhead we say.</p>
+
+<p>With Nudgespot, you can schedule your emails to be delivered any time after the event was processed - either a few hours or a couple of days after the event has been processed.</p>
+
+<p><em>Verdict</em>: Very easy with Nudgespot, right?</p>
+
+<h2 id="round-3---email-with-an-offer-of-a-demo">Round 3 - Email with an offer of a demo</h2>
+
+<p>Let&rsquo;s say you want to send an email with an offer for a demo, only to customers that haven&rsquo;t done a particular activity. This is where it starts getting really easy with Nudgespot.</p>
+
+<p>You can configure triggers with really complex rules. No messy database queries, no cron dependencies. To give you an idea of the power of Nudgespot, here are some triggers you can create with Nudgespot:</p>
+
+<p>Customers that:</p>
+
+<ul>
+<li>did signup but did not create_campaign</li>
+<li>did add_to_cart but did not place_order within 3 days of add_to_cart</li>
+<li>did order a product in category &ldquo;silk&rdquo;</li>
+</ul>
+
+<p><em>Verdict</em>: You are looking for our signup page right? <a href="https://beta.nudgespot.com">Here</a> you go!</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I hope you are seeing the benefits of Nudgespot. While you are used to sending emails directly from code, we hope you now see the benefits of using Nudgespot.</p>
+
+      </div>
+      <div class="dark-box">
+          <div id="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="javascript">javascript</a>
+          </div>
+      </div>
+    </div>
+  </body>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48102459-1', 'auto');
+  ga('send', 'pageview');
+
+  </script>
+</html>
