@@ -65,7 +65,7 @@ d
 <p>Our REST API expects that you pass your <em>API Secret Key</em> along with your requests. The format is:
 https://api:&lt;api_secret_key&gt;@api.nudgespot.com</p>
 <pre class="highlight shell"><span class="c"># Authenticating via curl</span>
-curl <span class="s2">"https://api:your_api_secret_key/api_endpoint_here"</span>
+curl <span class="s2">"https://api:your_api_secret_key@api.nudgespot.com/api_endpoint_here"</span>
 </pre>
 
 <h1 id="tracking-api">Tracking API</h1>
@@ -111,7 +111,7 @@ curl <span class="s2">"https://api:your_api_secret_key/api_endpoint_here"</span>
 </tr>
 </tbody></table>
 <pre class="highlight shell"><span class="c"># Sending an activity</span>
-curl -X POST <span class="s2">"https://api:your_api_secret_key/activities"</span> --header <span class="s2">"Content-Type:application/json"</span> -d <span class="s2">"{'user' =&gt; { 'email' =&gt; 'foobar@example.com' },'timestamp' =&gt; '2014-01-27T09:15:00.000Z','properties' =&gt; {'plan': 'bronze'},'event' =&gt; 'Signup'}"</span>
+curl -X POST <span class="s2">"https://api:your_api_secret_key@api.nudgespot.com/activities"</span> --header <span class="s2">"Content-Type:application/json"</span> --header <span class="s2">"Accept:application/json"</span> -d <span class="s1">'{"activity": {"user": { "email": "foobar@example.com" },"timestamp": "2014-01-27T09:15:00.000Z","properties": {"plan": "bronze"},"event": "event_name"}}'</span>
 </pre>
 
 <h2 id="tracking-activities-via-javascript">Tracking activities via Javascript</h2>
