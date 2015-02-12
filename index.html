@@ -54,16 +54,16 @@ d
 
 <p>Our REST APIs are available at the following endpoint:</p>
 
-<p><em>Base API Endpoint:</em> https://api:&lt;your_api_secret_key&gt;@beta.nudgespot.com/</p>
+<p><em>Base API Endpoint:</em> https://api:&lt;your_api_secret_key&gt;@api.nudgespot.com/</p>
 
 <h2 id="authentication">Authentication</h2>
 
-<p>Nudgespot validates all your requests using authentication tokens. You can find your authentication tokens on your Nudgespot <a href="https://beta.nudgespot.com/settings">settings page</a>.</p>
+<p>Nudgespot validates all your requests using authentication tokens. You can find your authentication tokens on your Nudgespot <a href="https://app.nudgespot.com/settings">settings page</a>.</p>
 
 <h3 id="rest">REST</h3>
 
 <p>Our REST API expects that you pass your <em>API Secret Key</em> along with your requests. The format is:
-https://api:&lt;api_secret_key&gt;@beta.nudgespot.com</p>
+https://api:&lt;api_secret_key&gt;@api.nudgespot.com</p>
 <pre class="highlight shell"><span class="c"># Authenticating via curl</span>
 curl <span class="s2">"https://api:your_api_secret_key/api_endpoint_here"</span>
 </pre>
@@ -78,7 +78,7 @@ curl <span class="s2">"https://api:your_api_secret_key/api_endpoint_here"</span>
 
 <p><em>POST</em> request should be made to the following url:</p>
 
-<p>https://api:<api_secret_key>@beta.nudgespot.com/activities</p>
+<p>https://api:<api_secret_key>@api.nudgespot.com/activities</p>
 
 <p>The payload must be a <em>JSON</em> in the format below:</p>
 
@@ -222,7 +222,7 @@ curl -X POST <span class="s2">"https://api:your_api_secret_key/activities"</span
 <li>did order a product in category &ldquo;silk&rdquo;</li>
 </ul>
 
-<p><em>Verdict</em>: You are looking for our signup page right? <a href="https://beta.nudgespot.com">Here</a> you go!</p>
+<p><em>Verdict</em>: You are looking for our signup page right? <a href="https://app.nudgespot.com">Here</a> you go!</p>
 
 <h2 id="conclusion">Conclusion</h2>
 
