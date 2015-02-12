@@ -42,7 +42,7 @@ https://api:&lt;api_secret_key&gt;@api.nudgespot.com
 
 ```shell
 # Authenticating via curl
-curl "https://api:your_api_secret_key/api_endpoint_here"
+curl "https://api:your_api_secret_key@api.nudgespot.com/api_endpoint_here"
 ```
 
 # Tracking API
@@ -68,7 +68,7 @@ properties|Hash| Name value pairs of any additional properties of the activity {
 
 ```shell
 # Sending an activity
-curl -X POST "https://api:your_api_secret_key/activities" --header "Content-Type:application/json" -d "{'user' => { 'email' => 'foobar@example.com' },'timestamp' => '2014-01-27T09:15:00.000Z','properties' => {'plan': 'bronze'},'event' => 'Signup'}"
+curl -X POST "https://api:your_api_secret_key@api.nudgespot.com/activities" --header "Content-Type:application/json" --header "Accept:application/json" -d '{"activity": {"user": { "email": "foobar@example.com" },"timestamp": "2014-01-27T09:15:00.000Z","properties": {"plan": "bronze"},"event": "event_name"}}'
 ```
 
 ## Tracking activities via Javascript
