@@ -105,6 +105,34 @@ properties|Hash|Optional|Name value pair of properties of the activity. Example:
 nudgespot.track("signup", {plan: "bronze", currency: "USD", value: 100.23});
 ```
 
+# Users API
+
+Manage your users in your Nudgespot account via a REST service.
+
+## Exporting users via REST api
+To create a new user via our REST API:
+
+*POST* request should be made to the following url:
+
+https://api:<api_secret_key>@api.nudgespot.com/subscribers
+
+The payload must be a *JSON* in the format below:
+
+Parameter | Type | Description
+--------- | ---- | -----------
+email|String|Email of your user
+first_name|String|First name of your user
+last_name|String|Last name of your user
+contact |Array| A list of contact details for the user. Each element should be a hash with contact_type and contact_value keys. contact_type can be either of "phone" or "email" Example: [{"contact_type": "phone", "contact_value": "+1201111111"}, {"contact_type": "email", "contact_value": "foobar@example.com"}
+signedup_at|String| Date/time when the user signed up in ISO 8601 format
+properties|Hash| Name value pairs of any additional properties of the activity. Example: {"gender": "male", "age": 30},
+
+
+```shell
+# Sending an activity
+curl -X POST "https://api:your_api_secret_key@api.nudgespot.com/subscribers" --header "Content-Type:application/json" --header "Accept:application/json" -d '{"subscriber": { "email": "foobar@example.com", "first_name": "Foo", "last_name": "Bar", "signedup_at": "2014-01-27T09:15:00.000Z","properties": {"gender": "male"},"contact": [{"contact_type": "phone", "contact_value": "+1201111111"}, {"contact_type": "email", "contact_value": "foobar@example.com"}]}}'
+```
+
 
 # Nudgespot vs SendGrid (or SES)
 SendGrid and SES are transactional email providers. But Nudgespot is a service that makes it easy to send and schedule emails based on events/actions performed by a customer. In fact, Nudgespot uses a provider like SendGrid to send emails.
