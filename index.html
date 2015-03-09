@@ -180,6 +180,62 @@ curl -X POST <span class="s2">"https://api:your_api_secret_key@api.nudgespot.com
 </span><span class="nx">nudgespot</span><span class="p">.</span><span class="nx">track</span><span class="p">(</span><span class="s2">"signup"</span><span class="p">,</span> <span class="p">{</span><span class="na">plan</span><span class="p">:</span> <span class="s2">"bronze"</span><span class="p">,</span> <span class="na">currency</span><span class="p">:</span> <span class="s2">"USD"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="mf">100.23</span><span class="p">});</span>
 </pre>
 
+<h1 id="users-api">Users API</h1>
+
+<p>Manage your users in your Nudgespot account via a REST service.</p>
+
+<h2 id="exporting-users-via-rest-api">Exporting users via REST api</h2>
+
+<p>To create a new user via our REST API:</p>
+
+<p><em>POST</em> request should be made to the following url:</p>
+
+<p>https://api:<api_secret_key>@api.nudgespot.com/subscribers</p>
+
+<p>The payload must be a <em>JSON</em> in the format below:</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>email</td>
+<td>String</td>
+<td>Email of your user</td>
+</tr>
+<tr>
+<td>first_name</td>
+<td>String</td>
+<td>First name of your user</td>
+</tr>
+<tr>
+<td>last_name</td>
+<td>String</td>
+<td>Last name of your user</td>
+</tr>
+<tr>
+<td>contact</td>
+<td>Array</td>
+<td>A list of contact details for the user. Each element should be a hash with contact_type and contact_value keys. contact_type can be either of &ldquo;phone&rdquo; or &ldquo;email&rdquo; Example: [{&ldquo;contact_type&rdquo;: &ldquo;phone&rdquo;, &ldquo;contact_value&rdquo;: &ldquo;+1201111111&rdquo;}, {&ldquo;contact_type&rdquo;: &ldquo;email&rdquo;, &ldquo;contact_value&rdquo;: &ldquo;foobar@example.com&rdquo;}</td>
+</tr>
+<tr>
+<td>signedup_at</td>
+<td>String</td>
+<td>Date/time when the user signed up in ISO 8601 format</td>
+</tr>
+<tr>
+<td>properties</td>
+<td>Hash</td>
+<td>Name value pairs of any additional properties of the activity. Example: {&ldquo;gender&rdquo;: &ldquo;male&rdquo;, &ldquo;age&rdquo;: 30},</td>
+</tr>
+</tbody></table>
+<pre class="highlight shell"><span class="c"># Sending an activity</span>
+curl -X POST <span class="s2">"https://api:your_api_secret_key@api.nudgespot.com/subscribers"</span> --header <span class="s2">"Content-Type:application/json"</span> --header <span class="s2">"Accept:application/json"</span> -d <span class="s1">'{"subscriber": { "email": "foobar@example.com", "first_name": "Foo", "last_name": "Bar", "signedup_at": "2014-01-27T09:15:00.000Z","properties": {"gender": "male"},"contact": [{"contact_type": "phone", "contact_value": "+1201111111"}, {"contact_type": "email", "contact_value": "foobar@example.com"}]}}'</span>
+</pre>
+
 <h1 id="nudgespot-vs-sendgrid-(or-ses)">Nudgespot vs SendGrid (or SES)</h1>
 
 <p>SendGrid and SES are transactional email providers. But Nudgespot is a service that makes it easy to send and schedule emails based on events/actions performed by a customer. In fact, Nudgespot uses a provider like SendGrid to send emails.</p>
