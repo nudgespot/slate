@@ -232,7 +232,7 @@ curl -X POST <span class="s2">"https://api:your_api_secret_key@api.nudgespot.com
 <td>Name value pairs of any additional properties of the activity. Example: {&ldquo;gender&rdquo;: &ldquo;male&rdquo;, &ldquo;age&rdquo;: 30},</td>
 </tr>
 </tbody></table>
-<pre class="highlight shell"><span class="c"># Sending an activity</span>
+<pre class="highlight shell"><span class="c"># Creating a user</span>
 curl -X POST <span class="s2">"https://api:your_api_secret_key@api.nudgespot.com/subscribers"</span> --header <span class="s2">"Content-Type:application/json"</span> --header <span class="s2">"Accept:application/json"</span> -d <span class="s1">'{"subscriber": { "email": "foobar@example.com", "first_name": "Foo", "last_name": "Bar", "signedup_at": "2014-01-27T09:15:00.000Z","properties": {"gender": "male"},"contact": [{"contact_type": "phone", "contact_value": "+1201111111"}, {"contact_type": "email", "contact_value": "foobar@example.com"}]}}'</span>
 </pre>
 
