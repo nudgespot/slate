@@ -129,7 +129,7 @@ properties|Hash| Name value pairs of any additional properties of the activity. 
 
 
 ```shell
-# Sending an activity
+# Creating a user
 curl -X POST "https://api:your_api_secret_key@api.nudgespot.com/subscribers" --header "Content-Type:application/json" --header "Accept:application/json" -d '{"subscriber": { "email": "foobar@example.com", "first_name": "Foo", "last_name": "Bar", "signedup_at": "2014-01-27T09:15:00.000Z","properties": {"gender": "male"},"contact": [{"contact_type": "phone", "contact_value": "+1201111111"}, {"contact_type": "email", "contact_value": "foobar@example.com"}]}}'
 ```
 
